@@ -1,5 +1,5 @@
--🧠 Luna System – Private AI Cognition Engine
-Luna is a Swift + Python native macOS platform designed as a private, project-centric AI cognition engine. It powers auto-generating multi-agent reasoning scenarios, self-iterating agents that dynamically tune their parameters, and swarm self-cloning workers for continuous background analysis. The system integrates NLP, web intelligence, geolocation, chat analysis, and code management, with all data stored locally (except LLM inference) in specialized databases. The Swift frontend leverages CoreML for on-device ML, while the Python backend handles analysis and orchestration.
+🧠 Luna System – Private AI Cognition Engine
+Luna is a Swift + Python native macOS platform designed as a private, project-centric AI cognition engine. It powers auto-generating multi-agent reasoning scenarios, self-iterating agents that dynamically tune their parameters, and swarm self-cloning workers for continuous background analysis. The system integrates NLP, web intelligence, geolocation, chat analysis, and code management, with support for Mistral, OpenAI, and Google Gemini LLMs (via 10 Mistral API keys and other provider APIs). All data is stored locally (except LLM inference) in specialized databases, with a CoreML-powered Swift frontend and a robust Python backend.
 This is a private repository for internal development and experimentation.
 
 🌟 Core Features
@@ -51,6 +51,10 @@ Persistent Memory
 Local storage in SQLite/JSON for chats, web scrapes, and scenario analysis.
 
 
+Multi-LLM Support
+Integrates Mistral (10 API keys), OpenAI, and Google Gemini for flexible model selection.
+
+
 
 🛠️ Tech Stack
 ⚙️ Backend (Python)
@@ -59,7 +63,7 @@ Standard Libraries: os, json, logging, re, uuid, datetime, urllib.parse, threadi
 Third-Party Libraries:
 Web & Scraping: requests, aiohttp, httpx, bs4 (BeautifulSoup), playwright, selenium, newspaper, readability, yarl, tenacity, cachetools, markdown2, fitz (PyMuPDF), pdfplumber, PIL, pytesseract.
 Data & Analysis: numpy, pandas, sklearn, matplotlib, seaborn, spacy, nltk, umap, collections.Counter, sklearn.feature_extraction.text (TfidfVectorizer, CountVectorizer), sklearn.decomposition (LDA).
-AI & NLP: torch, transformers, sentence_transformers, bertopic, keybert, openai, google.generativeai, T5, BERT, spacy.matcher.
+AI & NLP: torch, transformers, sentence_transformers, bertopic, keybert, openai, google.generativeai, mistralai, T5, BERT, spacy.matcher.
 Database: sqlite3, sqlalchemy, aiosqlite.
 Web Framework: fastapi, starlette, slowapi.
 Async & Concurrency: asyncio, concurrent.futures, aiofiles, anyio, websockets.
@@ -108,38 +112,38 @@ Indexed chats, embeddings, metadata, and scraped data.
 
 backlog/
 Folder
-Imported logs (CSV, JSON)
+Imported logs (CSV, JSON).
 
 
 
 🔍 Key Workflows
 🧠 Cognition Scenario Engine
 
-Auto-Generation: Dynamically creates multi-agent reasoning scenarios with per-agent parameters.
-Self-Iteration: Agents tune parameters (e.g., temperature, top-k) based on response quality.
-Parallel Analysis: Stored in cognition_scenario.db, analyzed by swarm workers for novelty, conflict, and coherence.
+Auto-Generation: Creates multi-agent reasoning scenarios with dynamic parameters.
+Self-Iteration: Agents tune parameters (e.g., temperature, top-k) using Mistral, OpenAI, or Gemini models.
+Parallel Analysis: Swarm workers analyze scenarios in cognition_scenario.db for novelty, conflict, and coherence.
 Endpoints: FastAPI endpoints for scenario creation, agent management, and analysis retrieval.
 
 💬 Chat Intelligence
 
 Inputs: Live chats, CSV/JSON imports, URLs (stored in frontend_chat.db).
-Analysis (same Python stack as web intelligence):
+Analysis (shared Python stack):
 Cosine similarity (sentence_transformers) for prompt/response matching.
 Sentiment, bias, ABSA (transformers, spacy).
-Topic modeling (bertopic, sklearn.LDA) and keyword extraction (keybert).
+Topic modeling (bertopic, sklearn.LDA), keyword extraction (keybert).
 
 
 Endpoints: FastAPI endpoints for chat analysis, keyword search, and TTS/STT queue management.
-Outputs: Summaries, tagged metadata, embeddings stored in backend.db and frontend_chat.db.
+Outputs: Summaries, tagged metadata, embeddings in backend.db and frontend_chat.db.
 
 🌐 Web Intelligence
 
 Querying: Multi-engine searches (Google, OpenAI, DuckDuckGo) with unified aggregation.
 Scraping: Extracts articles, images, and metadata using playwright, selenium, bs4, newspaper.
-Ranking: 5-score system (relevance, authority, recency, depth, trust) for results.
+Ranking: 5-score system (relevance, authority, recency, depth, trust).
 Analysis (stored in backend.db):
-NER and entity linking (spacy, transformers).
-Geolocation and geotagging (geopy.Nominatim).
+NER, entity linking (spacy, transformers).
+Geolocation, geotagging (geopy.Nominatim).
 ABSA, topic modeling (bertopic, sklearn.LDA), keyword extraction (keybert).
 
 
@@ -147,7 +151,7 @@ Endpoints: FastAPI endpoints for search, scrape, and analysis retrieval.
 
 📍 Geolocation & Geotagging
 
-Extraction: Identifies geolocation data from entities using geopy.Nominatim.
+Extraction: Identifies geolocation data using geopy.Nominatim.
 Geotagging: Tags data with location metadata.
 Mapping: Maps locations with AI-augmented insights, stored in backend.db.
 
@@ -164,6 +168,9 @@ cd luna-system
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Configure API keys (Mistral, OpenAI, Google Gemini)
+# Add keys to environment variables or config file
 
 # Start backend
 uvicorn app.main:app --reload
@@ -185,11 +192,12 @@ python scraper_controller.py
 
 
 🧠 Philosophy
-Luna is a private AI research lab—an autonomous cognition engine for experimenting with multi-agent reasoning, NLP, and web intelligence. It’s designed for deep, project-centric workflows with minimal external dependencies, giving you full control over your data and analysis.
+Luna is a private AI research lab—an autonomous cognition engine for experimenting with multi-agent reasoning, NLP, and web intelligence. It’s designed for deep, project-centric workflows with minimal external dependencies, leveraging Mistral, OpenAI, and Gemini LLMs under your control.
 
 📝 Notes
 
 Private Repository: For internal use only. Public demos will use a separate repo with limited features.
+Mistral Integration: 10 API keys configured for flexible LLM access.
 Future App: A stripped-down macOS app is planned but not public.
 Contact: Reach out via internal project channels for collaboration.
 
